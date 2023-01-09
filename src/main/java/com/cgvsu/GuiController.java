@@ -83,6 +83,7 @@ public class GuiController {
 
         Path fileName = Path.of(file.getAbsolutePath());
 
+
         try {
             String fileContent = Files.readString(fileName);
             float[] arr1 = {0, 0, 100};
@@ -118,6 +119,7 @@ public class GuiController {
         } catch (IOException exception) {
 
         }
+
     }
 
     @FXML
@@ -149,8 +151,7 @@ public class GuiController {
     @FXML
     public void moveCameraForward(ActionEvent actionEvent) {
         if (scenes.size() > 0) {
-            float[] arr = {0, 0, -TRANSLATION};
-            scenes.get(currSceneId).camera.movePosition(new Vector3f(arr));
+            scenes.get(currSceneId).camera.scalePosition(TRANSLATION/40);
             printCamPos();
         }
     }
@@ -158,8 +159,7 @@ public class GuiController {
     @FXML
     public void moveCameraBackward(ActionEvent actionEvent) {
         if (scenes.size() > 0) {
-            float[] arr = {0, 0, TRANSLATION};
-            scenes.get(currSceneId).camera.movePosition(new Vector3f(arr));
+            scenes.get(currSceneId).camera.scalePosition(-TRANSLATION/40);
             printCamPos();
         }
     }

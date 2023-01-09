@@ -4,11 +4,12 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cgvsu.GuiController">
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cgvsu.GuiController">
     <MenuBar>
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#onOpenModelMenuItemClick" text="Load Model">
@@ -40,12 +41,12 @@
         <Menu mnemonicParsing="false" text="Camera Options">
             <MenuItem mnemonicParsing="false" onAction="#moveCameraForward" text="Forward">
                 <accelerator>
-                    <KeyCodeCombination alt="UP" code="Z" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                    <KeyCodeCombination alt="UP" code="Q" control="UP" meta="UP" shift="UP" shortcut="UP" />
                 </accelerator>
             </MenuItem>
             <MenuItem mnemonicParsing="false" onAction="#moveCameraBackward" text="Backward">
                 <accelerator>
-                    <KeyCodeCombination alt="UP" code="X" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                    <KeyCodeCombination alt="UP" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
                 </accelerator>
             </MenuItem>
             <MenuItem mnemonicParsing="false" onAction="#moveCameraLeft" text="Left">

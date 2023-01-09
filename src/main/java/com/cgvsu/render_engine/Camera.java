@@ -1,7 +1,8 @@
 package com.cgvsu.render_engine;
+
+import javax.vecmath.Matrix4f;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
-import javax.vecmath.Matrix4f;
 
 public class Camera {
 
@@ -18,7 +19,6 @@ public class Camera {
         this.aspectRatio = aspectRatio;
         this.nearPlane = nearPlane;
         this.farPlane = farPlane;
-        this.distance = (float) Math.sqrt(Math.pow(position.x, 2) + Math.pow(position.z, 2));
         rot = false;
     }
 
@@ -55,6 +55,20 @@ public class Camera {
         this.target.add(translation);
     }
 
+    public void scalePosition(float scale) {
+        if (calcDistanceToTargetYAxis() > 15 || scale > 0) {
+            position.scale(scale + positionScale);
+        }
+    }
+
+    private float calcDistanceToTarget() {
+        return position.length();
+    }
+
+    private float calcDistanceToTargetYAxis() {
+        return (float) Math.sqrt(Math.pow(position.x, 2) + Math.pow(position.z, 2));
+    }
+
     public void circleHorMovePosition(float translation) {
         var rad = (Math.PI / 180) * translation;
 
@@ -63,21 +77,22 @@ public class Camera {
     }
 
     public void circleVerMovePosition(float angle) {
-        if (Math.sqrt(Math.pow(position.x, 2) + Math.pow(position.z, 2)) > 2) {
+
+        if (calcDistanceToTargetYAxis() > calcDistanceToTarget() / 10) {
+            rotateVerAroundTarget(angle);
+        } else if ((angle > 0 && position.y >= 0) || (angle < 0 && position.y <= 0)) {
             rotateVerAroundTarget(angle);
         }
-        else if ((angle > 0 && position.y >= 0) || (angle < 0 && position.y <= 0)) {
-            rotateVerAroundTarget(angle);
-        }
+
     }
 
     private void rotateVerAroundTarget(float angle) {
-        Vector3f rotateVector = rotateVectorAroundVector(position, new Vector3f(0, 1, 0), 90);
+        Vector3f rotateVector = rotateVectorAroundAxis(position, new Vector3f(0, 1, 0), 90);
         rotateVector.y = 0;
-        position = rotateVectorAroundVector(position, rotateVector, angle);
+        position = rotateVectorAroundAxis(position, rotateVector, angle);
     }
 
-    private Vector3f rotateVectorAroundVector(Vector3f vector, Vector3f rotateVector, float angle) {
+    private Vector3f rotateVectorAroundAxis(Vector3f vector, Vector3f rotateVector, float angle) {
         var rad = (Math.PI / 180) * angle;
         Quat4f q = new Quat4f();
         rotateVector = normaliseVector(rotateVector);
@@ -157,7 +172,7 @@ public class Camera {
 
     private Vector3f position;
     private Vector3f target;
-    private float distance;
+    private float positionScale = 1;
     private float fov;
     private float aspectRatio;
     private float nearPlane;
