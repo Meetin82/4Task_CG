@@ -1,7 +1,6 @@
 package com.cgvsu.render_engine;
 
 import com.cgvsu.model.Model;
-import javafx.scene.canvas.GraphicsContext;
 
 public class Scene {
     private int id;

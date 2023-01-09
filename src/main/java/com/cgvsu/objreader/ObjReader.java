@@ -1,7 +1,7 @@
 package com.cgvsu.objreader;
 
-import com.cgvsu.math.Vector2f;
-import com.cgvsu.math.Vector3f;
+import com.cgvsu.math.Vector.Vector2f;
+import com.cgvsu.math.Vector.Vector3f;
 import com.cgvsu.model.Model;
 import com.cgvsu.model.Polygon;
 
@@ -63,10 +63,10 @@ public class ObjReader {
 		}
 
 		try {
-			return new Vector3f(
-					Float.parseFloat(wordsInLineWithoutToken.get(0)),
+			float[] array = {Float.parseFloat(wordsInLineWithoutToken.get(0)),
 					Float.parseFloat(wordsInLineWithoutToken.get(1)),
-					Float.parseFloat(wordsInLineWithoutToken.get(2)));
+					Float.parseFloat(wordsInLineWithoutToken.get(2))};
+			return new Vector3f(array);
 
 		} catch(NumberFormatException e) {
 			throw new ObjReaderException.ObjFormatException("Failed to parse float value.", lineInd);
@@ -82,9 +82,9 @@ public class ObjReader {
 		}
 
 		try {
-			return new Vector2f(
-					Float.parseFloat(wordsInLineWithoutToken.get(0)),
-					Float.parseFloat(wordsInLineWithoutToken.get(1)));
+			float[] array = {Float.parseFloat(wordsInLineWithoutToken.get(0)),
+					Float.parseFloat(wordsInLineWithoutToken.get(1))};
+			return new Vector2f(array);
 
 		} catch(NumberFormatException e) {
 			throw new ObjReaderException.ObjFormatException("Failed to parse float value.", lineInd);
@@ -100,10 +100,10 @@ public class ObjReader {
 		}
 
 		try {
-			return new Vector3f(
-					Float.parseFloat(wordsInLineWithoutToken.get(0)),
+			float[] array = {Float.parseFloat(wordsInLineWithoutToken.get(0)),
 					Float.parseFloat(wordsInLineWithoutToken.get(1)),
-					Float.parseFloat(wordsInLineWithoutToken.get(2)));
+					Float.parseFloat(wordsInLineWithoutToken.get(2))};
+			return new Vector3f(array);
 
 		} catch(NumberFormatException e) {
 			throw new ObjReaderException.ObjFormatException("Failed to parse float value.", lineInd);

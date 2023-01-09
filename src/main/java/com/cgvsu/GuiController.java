@@ -1,33 +1,29 @@
 package com.cgvsu;
 
+import com.cgvsu.objWriter.ObjWriter;
+import com.cgvsu.objreader.ObjReader;
+import com.cgvsu.render_engine.Camera;
 import com.cgvsu.render_engine.RenderEngine;
 import com.cgvsu.render_engine.Scene;
-import javafx.fxml.FXML;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
+import javax.vecmath.Vector3f;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.io.IOException;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import javax.vecmath.Vector3f;
-
-import com.cgvsu.model.Model;
-import com.cgvsu.objreader.ObjReader;
-import com.cgvsu.render_engine.Camera;
 
 public class GuiController {
 
@@ -65,7 +61,6 @@ public class GuiController {
                 scene.setHeight((int) height);
                 scene.setWight((int) width);
                 RenderEngine.render(canvas.getGraphicsContext2D(), scene);
-
             }
 
         });
@@ -90,11 +85,36 @@ public class GuiController {
 
         try {
             String fileContent = Files.readString(fileName);
+            float[] arr1 = {0, 0, 100};
+            float[] arr2 = {0, 0, 0};
             scenes.add(new Scene(currSceneId + 1, ObjReader.read(fileContent), new Camera(
-                    new Vector3f(0, 0, 100),
-                    new Vector3f(0, 0, 0),
+                    new Vector3f(arr1),
+                    new Vector3f(arr2),
                     1.0F, 1, 0.01F, 100)));
             currSceneId++;
+            printCamPos();
+        } catch (IOException exception) {
+
+        }
+    }
+
+    @FXML
+    private void saveModel() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
+        fileChooser.setTitle("Save Model");
+
+        File file = fileChooser.showSaveDialog((Stage) canvas.getScene().getWindow());
+        if (file == null) {
+            return;
+        }
+
+        try {
+            String fileName = file.toString();
+            if (!fileName.endsWith(".obj"))
+                fileName += ".obj";
+            ObjWriter.createObjFile(fileName);
+            ObjWriter.writeToFile(scenes.get(currSceneId).mesh, file);
         } catch (IOException exception) {
 
         }
@@ -129,7 +149,8 @@ public class GuiController {
     @FXML
     public void moveCameraForward(ActionEvent actionEvent) {
         if (scenes.size() > 0) {
-            scenes.get(currSceneId).camera.movePosition(new Vector3f(0, 0, -TRANSLATION));
+            float[] arr = {0, 0, -TRANSLATION};
+            scenes.get(currSceneId).camera.movePosition(new Vector3f(arr));
             printCamPos();
         }
     }
@@ -137,7 +158,8 @@ public class GuiController {
     @FXML
     public void moveCameraBackward(ActionEvent actionEvent) {
         if (scenes.size() > 0) {
-            scenes.get(currSceneId).camera.movePosition(new Vector3f(0, 0, TRANSLATION));
+            float[] arr = {0, 0, TRANSLATION};
+            scenes.get(currSceneId).camera.movePosition(new Vector3f(arr));
             printCamPos();
         }
     }

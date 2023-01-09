@@ -1,7 +1,7 @@
-package com.cgvsu.objwriter;
+package com.cgvsu.objWriter;
 
-import com.cgvsu.math.Vector2f;
-import com.cgvsu.math.Vector3f;
+import com.cgvsu.math.Vector.Vector2f;
+import com.cgvsu.math.Vector.Vector3f;
 import com.cgvsu.model.Model;
 import com.cgvsu.model.Polygon;
 
@@ -36,9 +36,9 @@ public class ObjWriter {
     protected static String writeVertexes(final ArrayList<Vector3f> v){
         String str = "";
         for (int i = 0; i < v.size(); i++){
-            final String vx = String.format("%.4f", v.get(i).x).replace(',', '.');
-            final String vy = String.format("%.4f", v.get(i).y).replace(',', '.');
-            final String vz = String.format("%.4f", v.get(i).z).replace(',', '.');
+            final String vx = String.format("%.4f", v.get(i).data[0]).replace(',', '.');
+            final String vy = String.format("%.4f", v.get(i).data[1]).replace(',', '.');
+            final String vz = String.format("%.4f", v.get(i).data[2]).replace(',', '.');
             str = str + "v  " + vx + " " + vy + " " + vz + "\n";
         }
         str = str + "# " + v.size() + " vertices";
@@ -50,8 +50,8 @@ public class ObjWriter {
     protected static String writeTextureVertexes(final ArrayList<Vector2f> vt){
         String str = "";
         for (int i = 0; i < vt.size(); i++){
-            final String vtx = String.format("%.4f", vt.get(i).x).replace(',', '.');
-            final String vty = String.format("%.4f", vt.get(i).y).replace(',', '.');
+            final String vtx = String.format("%.4f", vt.get(i).data[0]).replace(',', '.');
+            final String vty = String.format("%.4f", vt.get(i).data[1]).replace(',', '.');
             str = str + "vt " + vtx + " " + vty + " " + "0.0000" + "\n";
         }
         str = str + "# " + vt.size() + " texture coords";
@@ -63,9 +63,9 @@ public class ObjWriter {
     protected static String writeNormals(final ArrayList<Vector3f> vn){
         String str = "";
         for (int i = 0; i < vn.size(); i++){
-            final String vx = String.format("%.4f", vn.get(i).x).replace(',', '.');
-            final String vy = String.format("%.4f", vn.get(i).y).replace(',', '.');
-            final String vz = String.format("%.4f", vn.get(i).z).replace(',', '.');
+            final String vx = String.format("%.4f", vn.get(i).data[0]).replace(',', '.');
+            final String vy = String.format("%.4f", vn.get(i).data[1]).replace(',', '.');
+            final String vz = String.format("%.4f", vn.get(i).data[2]).replace(',', '.');
             str = str + "vn  " + vx + " " + vy + " " + vz + "\n";
         }
         str = str + "# " + vn.size() + " normals";
